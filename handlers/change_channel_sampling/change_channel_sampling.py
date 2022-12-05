@@ -10,7 +10,8 @@ from config import TOKEN as API_TOKEN
 from main import keyboard_start, dp, Digest
 
 
-@dp.message_handler(Text(["Изменить выборку каналов"]), state='*')
+@dp.message_handler(Text(["Изменить выборку каналов"]), state=Digest.confirm_digest)
 async def change_channel_sampling(message: types.Message, state: FSMContext):
+    # TODO
     # тут типа отправить сообщение выбери каналы
     await Digest.change_channel_sampling.set()
