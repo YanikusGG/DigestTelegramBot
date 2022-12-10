@@ -40,14 +40,14 @@ async def set_definite_posts_limit(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(Text(["Снять ограничение"]), state=Digest.change_posts_limit)
-async def set_own_posts_limit(message: types.Message, state: FSMContext):
+async def remove_limit(message: types.Message, state: FSMContext):
     await set_default_limit(-1)
     await Digest.confirm_digest.set()
     await message.answer("Снял ограничение на количество записей", reply_markup=keyboard_parameters)
 
 
 @dp.message_handler(Text(["Свое ограничение на записи"]), state=Digest.change_posts_limit)
-async def set_own_posts_limit(message: types.Message, state: FSMContext):
+async def get_own_posts_limit(message: types.Message, state: FSMContext):
     await message.answer("Введи свое ограничение на записи")
 
 
