@@ -6,13 +6,13 @@ from markups import make_me, array_with_chanels
 from main import keyboard_start, dp, Digest, bot
 
 
-@dp.message_handler(Text(["Изменить выборку каналов"]))
+@dp.message_handler(Text(["Изменить выборку каналов"]), state=Digest.confirm_digest)
 async def change_channel_sampling(callback: QueueHandler):
     to = callback.from_user.id
     await bot.send_message(to, 'Выберите ваш канал', reply_markup=make_me('', to))
 
 
-@dp.callback_query_handler(Text(startswith='r'))
+@dp.callback_query_handler(Text(startswith='r'), state=Digest.confirm_digest)
 async def check_system(callback: QueueHandler):
     need_to_send = callback.data
     to = callback.from_user.id
@@ -21,7 +21,7 @@ async def check_system(callback: QueueHandler):
     menu = make_me(need_to_send, to)
     array = array_with_chanels(to)
 
-    print(array)
+    # print(array)
 
     await callback.message.edit_text('Выберите ваш канал', reply_markup=menu)
 
