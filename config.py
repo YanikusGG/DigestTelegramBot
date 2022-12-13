@@ -7,6 +7,11 @@ DEFAULT_CHANNELS = [
     'bestmemes',
     'itmemlib',
     'thedankestmemes',
+    'ithumor',
+    'LaQeque',
+    'howdyho_official',
+    'sarcasm_orgasm',
+    'prg_memes',
 ]
 DEFAULT_POSTS_LIMIT = 10
 DEFAULT_PERIOD = timedelta(days=1)

@@ -37,12 +37,12 @@ class Digest(StatesGroup):
 
 
 @dp.message_handler(Text(["Что ты умеешь делать?"]))
-async def start_order(message: types.Message):
+async def start(message: types.Message):
     await message.answer("Я умею присылать дайджесты по мемам!)", reply_markup=keyboard_start)
 
 
 @dp.message_handler(Text(["Дайджест"]))
-async def start_order(message: types.Message):
+async def start_digest(message: types.Message):
     await Digest.confirm_digest.set()
     await message.answer("Я автоматически собираю мемы со всех каналов за последние сутки. Текущие параметры: ...\n\n"
                          "Если хочешь поменять параметры - вперед!)", reply_markup=keyboard_parameters)
