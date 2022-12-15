@@ -7,9 +7,9 @@ from datetime import timedelta, datetime
 from db import connector
 
 
-async def set_default_period(user_id, x):
+async def set_default_period(user_id, period):
     connector.init_db()
-    connector.update_period(user_id, int(x.total_seconds()))
+    connector.update_period(user_id, int(period.total_seconds()))
     connector.close_db()
 
 
@@ -59,7 +59,7 @@ async def process_simple_calendar(callback_query: CallbackQuery, callback_data: 
             await callback_query.message.answer("Ты неверно задал дату(((")
         else:
             period = datetime.now() - selected_date
-            await set_default_period(callback_query.message.from_user.id, timedelta(days=period.days))
+            await set_default_period(callback_query.from_user.id, timedelta(days=period.days))
             days_string = "дней"
             if period.days % 10 == 1:
                 days_string = "день"

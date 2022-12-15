@@ -62,14 +62,14 @@ def get_row(user_id: int):
     global DB
     row = row_exists(user_id)
     if not row_exists(user_id):
-        add_row(user_id, '', DEFAULT_POSTS_LIMIT, DEFAULT_PERIOD.total_seconds())
+        add_row(user_id, '', DEFAULT_POSTS_LIMIT, int(DEFAULT_PERIOD.total_seconds()))
         row = row_exists(user_id)
     return row
 
 
 def update_channels(user_id: int, channels: str):
     posts_limit = DEFAULT_POSTS_LIMIT
-    period = DEFAULT_PERIOD.total_seconds()
+    period = int(DEFAULT_PERIOD.total_seconds())
     row = row_exists(user_id)
     if row:
         posts_limit = row[2]
@@ -93,7 +93,7 @@ def update_period(user_id: int, period: int):
 
 def update_posts_limit(user_id: int, posts_limit: int):
     channels = ''
-    period = DEFAULT_PERIOD.total_seconds()
+    period = int(DEFAULT_PERIOD.total_seconds())
     row = row_exists(user_id)
     if row:
         channels = row[1]

@@ -60,6 +60,9 @@ async def get_images_from_channel(user_id, channel):
 async def send_digest(message: types.Message):
     user_id = message.from_user.id
     channels = get_channels(user_id)
+    if channels is None or len(channels) == 0:
+        await message.answer("Вы не выбрали ни одного канала!")
+        return
     await message.answer("Лови Дайджест!")
     for channel in channels:
         images = await get_images_from_channel(user_id, channel)
