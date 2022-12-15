@@ -1,7 +1,7 @@
 ﻿from datetime import timedelta
 
 # bot http://t.me/DigestMemesBot
-TOKEN = '5736905674:AAHZTjRIpi0cwf-OQTPYmF2-8rRXyqByFRU'
+TOKEN = '<BOT_API_TOKEN>'
 
 DEFAULT_CHANNELS = [
     'bestmemes',
