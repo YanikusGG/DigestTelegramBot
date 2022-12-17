@@ -32,13 +32,16 @@ keyboard_parameters = types.ReplyKeyboardMarkup(keyboard=kb_parameters,
 class Digest(StatesGroup):
     confirm_digest = State()
     change_channel_sampling = State()
+    add_channel = State()
+    remove_channel = State()
     change_period = State()
     change_posts_limit = State()
 
 
 @dp.message_handler(Text(["Что ты умеешь делать?"]), state='*')
 async def start(message: types.Message):
-    await message.answer("Я умею присылать дайджесты по мемам!) При этом учитываю установленные тобой параметры!", reply_markup=keyboard_start)
+    await message.answer("Я умею присылать дайджесты по мемам!) При этом учитываю установленные тобой параметры!",
+                         reply_markup=keyboard_start)
 
 
 @dp.message_handler(Text(["Дайджест", "Текущие параметры"]), state='*')

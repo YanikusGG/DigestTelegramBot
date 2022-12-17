@@ -5,35 +5,70 @@ from db import connector
 
 def create_menu(array):
     menu = InlineKeyboardMarkup(row_width=1)
-    for i in range(8):
+    for i in range(len(DEFAULT_CHANNELS)):
         prefix = '-'
         if DEFAULT_CHANNELS[i] in array:
             prefix = '✅'
         menu.insert(InlineKeyboardButton(text=f"{prefix} {DEFAULT_CHANNELS[i]}",
                                          callback_data='-_-' + DEFAULT_CHANNELS[i]))
+    menu.insert(InlineKeyboardButton(text="Добавить свой канал",
+                                     callback_data='Add own channel'))
+    menu.insert(InlineKeyboardButton(text="Убрать канал из выборки",
+                                     callback_data='Remove channel'))
     return menu
 
 
-def create_menu_global(callback, user_id):
+def create_menu_global(channel, user_id):
     connector.init_db()
     row = connector.get_row(user_id)
     connector.close_db()
     if not row:
         return False
-    channels_str = row[1]
-    channels = decode_string(channels_str)
-    callback = callback[3:]
-    if callback not in DEFAULT_CHANNELS:
+    channels = decode_string(row[1])
+    channel = channel[3:]
+    if channel not in DEFAULT_CHANNELS:
         return create_menu(channels)
 
-    if callback in channels:
-        channels.remove(callback)
+    if channel in channels:
+        channels.remove(channel)
     else:
-        channels.append(callback)
+        channels.append(channel)
     connector.init_db()
     connector.update_channels(user_id, encode_array(channels))
     connector.close_db()
     return create_menu(channels)
+
+
+def add_custom_channel(channel, user_id):
+    connector.init_db()
+    row = connector.get_row(user_id)
+    connector.close_db()
+    if not row:
+        return False
+    channels = decode_string(row[1])
+    if channel in channels:
+        return True
+    channels.append(channel)
+    connector.init_db()
+    connector.update_channels(user_id, encode_array(channels))
+    connector.close_db()
+    return True
+
+
+def remove_custom_channel(channel, user_id):
+    connector.init_db()
+    row = connector.get_row(user_id)
+    connector.close_db()
+    if not row:
+        return False
+    channels = decode_string(row[1])
+    if channel not in channels:
+        return False
+    channels.remove(channel)
+    connector.init_db()
+    connector.update_channels(user_id, encode_array(channels))
+    connector.close_db()
+    return True
 
 
 def encode_array(array):
