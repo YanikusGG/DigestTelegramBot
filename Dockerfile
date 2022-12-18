@@ -1,3 +1,10 @@
-FROM python:3-onbuild
+FROM python:3
 
-CMD ["python3", "./main.py"]
+WORKDIR /<path_to_dir>/DigestTelegramBot
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD [ "python", "./main.py" ]
